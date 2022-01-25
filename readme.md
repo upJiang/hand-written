@@ -1,0 +1,1 @@
+安装 vscode 插件 code runner 直接运行 main.js
