@@ -84,3 +84,9 @@ class MyPromise {
 }
 
 module.exports = MyPromise;
+
+// 思路：
+// 定一个状态初始值 status，成功的返回值 value，失败的原因 reason，成功数组 onFulfilledCallbacks，失败数组 onRejectedCallbacks
+// 在 promise 会出现延迟 resolve 的情况，那么我们就需要去保存它 then 中传进来的 relove、reject 方法
+// 建立一个成功数组 onFulfilledCallbacks，失败数组 onRejectedCallbacks 去保存每一个执行的 promise
+// 当延迟结束，即 pending 状态结束后，通过 while 去依次执行数组中的方法，按照先进先出的规则 

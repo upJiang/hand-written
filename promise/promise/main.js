@@ -27,4 +27,6 @@ promise.then(value => {
 // 3
 // resolve success
 
+// 这里没有处理 then 的链式回调，如要更深入请查阅 https://juejin.cn/post/6945319439772434469#heading-15
+
 
