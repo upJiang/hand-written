@@ -8,6 +8,7 @@ function PromiseAll(promises) {
         let count = 0  // 用于判断是否全部执行完
         promises.forEach((promise, index) => {
             promise.then((res) => {
+                console.log("res", res);
                 result[index] = res
                 count++
                 count === promises.length && resolve(result)  //全部执行完后输出结果

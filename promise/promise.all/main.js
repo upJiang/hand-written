@@ -1,15 +1,17 @@
+执行所有
+
 const PromiseAll = require('./promiseAll')
 
 const promise1 = new Promise((resolve, reject) => {
     setTimeout(() => {
         resolve('success1')
-    }, 2000);
+    }, 5000);
 })
 
 const promise2 = new Promise((resolve, reject) => {
     setTimeout(() => {
         resolve('success2')
-    }, 2000);
+    }, 1000);
 })
 
 const promise3 = new Promise((resolve, reject) => {
