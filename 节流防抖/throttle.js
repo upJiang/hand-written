@@ -1,31 +1,30 @@
-// 节流： 多次触发同一个函数，同一段时间内只执行一次，所以节流会稀释函数的执行频率
+// 节流： 多次触发同一个函数，同一段时间内只执行一次，所以节流会稀释函数的执行频率。触发后只在乎时间，时间到了才执行
+// 如果事件不停的触发，它会在规定的时间内一直触发
 
-// 可以看出节流的主要原理就是利用时间差（当前和上次执行）来过滤中间过程触发的函数执行。控制是否在开始时会立即触发一次，及最后一次触发是否执行,添加取消的功能
+// fn：执行的方法，wait：等待的时间，immediate：第一次进入是否执行
 
-// fn：执行的方法，wait：等待的时间，leading：第一次进入是否执行，trailing：时间结束后是否执行
-function throttle(fn, wait, options = { leading: true, trailing: false }) {
+// 设置上次执行毫秒数初始值 0 ，设置 当前毫秒数 now，通过 now - previous 是否大于传入的等待毫秒数控制方法执行
+
+// 每次点击进入
+function throttle(fn, wait, immediate = false) {
     let timer; // 定时器
-    let previous = 0; // 时间
-
-    const { leading, trailing } = options;
+    let previous = 0; // 上次执行毫秒数初始化 0
 
     const throttled = function (...args) {
-        const now = +new Date(); //开始计时
+        // args 为执行函数传入的参数
 
-        //如果第一次进来不需要执行 leading === false，并且 previous === 0，即！，那么
-        if (leading === false && !previous) previous = now;
+        // 清除上一个 timer
         if (timer) clearTimeout(timer);
 
+        const now = +new Date();
+        // 如果第一次进来：previous === 0 并且不需要立即执行 immediate === false
+        // 设置当当前毫秒数等于上次执行毫秒数，相减等于0，肯定小于等待时间 wait，所以不能立即执行。
+        if (immediate === false && !previous) previous = now; // 控制不能立即执行
+
+        // now - previous 是否大于传入的等待毫秒数控制方法执行
         if (now - previous > wait) {
             fn.apply(this, args);
-            previous = now;
-        } else if (trailing) {
-            // 更新timer
-            timer = setTimeout(() => {
-                fn.apply(this, args);
-                previous = 0;
-                timer = null;
-            }, wait);
+            previous = now; // 执行完将上次执行毫秒数设置为当前毫秒数
         }
     }
 
